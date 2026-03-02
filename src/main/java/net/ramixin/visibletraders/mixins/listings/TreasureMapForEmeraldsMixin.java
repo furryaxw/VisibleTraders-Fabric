@@ -1,19 +1,17 @@
 package net.ramixin.visibletraders.mixins.listings;
 
 import com.mojang.serialization.MapCodec;
-import net.minecraft.core.Holder;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.npc.villager.VillagerTrades;
+import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraft.world.level.levelgen.structure.Structure;
-import net.minecraft.world.level.saveddata.maps.MapDecorationType;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.ramixin.visibletraders.ListingCodecs;
 import net.ramixin.visibletraders.ducks.TreasureMapForEmeraldsDuck;
 import net.ramixin.visibletraders.threading.SerializableListing;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,12 +22,12 @@ public abstract class TreasureMapForEmeraldsMixin implements TreasureMapForEmera
     @Shadow @Final private int emeraldCost;
     @Shadow @Final private TagKey<Structure> destination;
     @Shadow @Final private String displayName;
-    @Shadow @Final private Holder<MapDecorationType> destinationType;
+    @Shadow @Final private MapDecoration.Type destinationType;
     @Shadow @Final private int maxUses;
     @Shadow @Final private int villagerXp;
 
     @Shadow
-    public abstract @Nullable MerchantOffer getOffer(ServerLevel serverLevel, Entity entity, RandomSource randomSource);
+    public abstract @Nullable MerchantOffer getOffer(Entity entity, RandomSource randomSource);
 
     @Override
     public int visibleTrades$getEmeraldCost() {
@@ -47,7 +45,7 @@ public abstract class TreasureMapForEmeraldsMixin implements TreasureMapForEmera
     }
 
     @Override
-    public Holder<MapDecorationType> visibleTrades$getDestinationType() {
+    public MapDecoration.Type visibleTrades$getDestinationType() {
         return destinationType;
     }
 
@@ -67,7 +65,7 @@ public abstract class TreasureMapForEmeraldsMixin implements TreasureMapForEmera
     }
 
     @Override
-    public MerchantOffer visibleTrades$buildOffer(ServerLevel serverLevel, Entity entity, RandomSource randomSource) {
-        return getOffer(serverLevel,entity, randomSource);
+    public MerchantOffer visibleTrades$buildOffer(Entity entity, RandomSource randomSource) {
+        return getOffer(entity, randomSource);
     }
 }

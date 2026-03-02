@@ -2,15 +2,12 @@ package net.ramixin.visibletraders.threading;
 
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.trading.ItemCost;
 import net.minecraft.world.item.trading.MerchantOffer;
 import org.apache.commons.lang3.mutable.Mutable;
 import org.apache.commons.lang3.mutable.MutableObject;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jspecify.annotations.NonNull;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public class FutureMerchantOffer extends MerchantOffer {
@@ -21,7 +18,7 @@ public class FutureMerchantOffer extends MerchantOffer {
 
 
     public FutureMerchantOffer(SerializableListing listing, Supplier<MerchantOffer> future) {
-        super(new ItemCost(Items.AIR), Items.BARRIER.getDefaultInstance(), 0, 0, 0f);
+        super(new ItemStack(Items.AIR), new ItemStack(Items.BARRIER), 0, 0, 0f);
         this.listing = listing;
         this.future = future;
     }
@@ -35,147 +32,132 @@ public class FutureMerchantOffer extends MerchantOffer {
     }
 
     public boolean isFulfilled() {
-        return offer.get() != null;
+        return offer.getValue() != null;
     }
 
     public @Nullable MerchantOffer getFuture() {
-        return offer.get();
+        return offer.getValue();
     }
 
     @Override
     public @NotNull ItemStack getBaseCostA() {
-        return offer.get() != null ? offer.get().getBaseCostA() : super.getBaseCostA();
+        return offer.getValue() != null ? offer.getValue().getBaseCostA() : super.getBaseCostA();
     }
 
     @Override
     public @NotNull ItemStack getCostA() {
-        return offer.get() != null ? offer.get().getCostA() : super.getCostA();
+        return offer.getValue() != null ? offer.getValue().getCostA() : super.getCostA();
     }
 
     @Override
     public @NotNull ItemStack getCostB() {
-        return offer.get() != null ? offer.get().getCostB() : super.getCostB();
-    }
-
-    @Override
-    public @NotNull ItemCost getItemCostA() {
-        return offer.get() != null ? offer.get().getItemCostA() : super.getItemCostA();
-    }
-
-    @Override
-    public @NotNull Optional<ItemCost> getItemCostB() {
-        return offer.get() != null ? offer.get().getItemCostB() : super.getItemCostB();
+        return offer.getValue() != null ? offer.getValue().getCostB() : super.getCostB();
     }
 
     @Override
     public @NotNull ItemStack getResult() {
-        return offer.get() != null ? offer.get().getResult() : super.getResult();
+        return offer.getValue() != null ? offer.getValue().getResult() : super.getResult();
     }
 
     @Override
     public void updateDemand() {
-        if (offer.get() != null) offer.get().updateDemand();
+        if (offer.getValue() != null) offer.getValue().updateDemand();
         else super.updateDemand();
     }
 
     @Override
     public @NotNull ItemStack assemble() {
-        return offer.get() != null ? offer.get().assemble() : super.assemble();
+        return offer.getValue() != null ? offer.getValue().assemble() : super.assemble();
     }
 
     @Override
     public int getUses() {
-        return offer.get() != null ? offer.get().getUses() : super.getUses();
+        return offer.getValue() != null ? offer.getValue().getUses() : super.getUses();
     }
 
     @Override
     public void resetUses() {
-        if (offer.get() != null) offer.get().resetUses();
+        if (offer.getValue() != null) offer.getValue().resetUses();
         else super.resetUses();
     }
 
     @Override
     public int getMaxUses() {
-        return offer.get() != null ? offer.get().getMaxUses() : super.getMaxUses();
+        return offer.getValue() != null ? offer.getValue().getMaxUses() : super.getMaxUses();
     }
 
     @Override
     public void increaseUses() {
-        if (offer.get() != null) offer.get().increaseUses();
+        if (offer.getValue() != null) offer.getValue().increaseUses();
         else super.increaseUses();
     }
 
     @Override
     public int getDemand() {
-        return offer.get() != null ? offer.get().getDemand() : super.getDemand();
+        return offer.getValue() != null ? offer.getValue().getDemand() : super.getDemand();
     }
 
     @Override
     public void addToSpecialPriceDiff(int i) {
-        if (offer.get() != null) offer.get().addToSpecialPriceDiff(i);
+        if (offer.getValue() != null) offer.getValue().addToSpecialPriceDiff(i);
         else super.addToSpecialPriceDiff(i);
     }
 
     @Override
     public void resetSpecialPriceDiff() {
-        if (offer.get() != null) offer.get().resetSpecialPriceDiff();
+        if (offer.getValue() != null) offer.getValue().resetSpecialPriceDiff();
         else super.resetSpecialPriceDiff();
     }
 
     @Override
     public int getSpecialPriceDiff() {
-        return offer.get() != null ? offer.get().getSpecialPriceDiff() : super.getSpecialPriceDiff();
+        return offer.getValue() != null ? offer.getValue().getSpecialPriceDiff() : super.getSpecialPriceDiff();
     }
 
     @Override
     public void setSpecialPriceDiff(int i) {
-        if (offer.get() != null) offer.get().setSpecialPriceDiff(i);
+        if (offer.getValue() != null) offer.getValue().setSpecialPriceDiff(i);
         else super.setSpecialPriceDiff(i);
     }
 
     @Override
     public float getPriceMultiplier() {
-        return offer.get() != null ? offer.get().getPriceMultiplier() : super.getPriceMultiplier();
+        return offer.getValue() != null ? offer.getValue().getPriceMultiplier() : super.getPriceMultiplier();
     }
 
     @Override
     public int getXp() {
-        return offer.get() != null ? offer.get().getXp() : super.getXp();
+        return offer.getValue() != null ? offer.getValue().getXp() : super.getXp();
     }
 
     @Override
     public boolean isOutOfStock() {
-        return offer.get() != null ? offer.get().isOutOfStock() : super.isOutOfStock();
+        return offer.getValue() != null ? offer.getValue().isOutOfStock() : super.isOutOfStock();
     }
 
     @Override
     public void setToOutOfStock() {
-        if (offer.get() != null) offer.get().setToOutOfStock();
+        if (offer.getValue() != null) offer.getValue().setToOutOfStock();
         else super.setToOutOfStock();
     }
 
     @Override
     public boolean needsRestock() {
-        return offer.get() != null ? offer.get().needsRestock() : super.needsRestock();
+        return offer.getValue() != null ? offer.getValue().needsRestock() : super.needsRestock();
     }
 
     @Override
     public boolean shouldRewardExp() {
-        return offer.get() != null ? offer.get().shouldRewardExp() : super.shouldRewardExp();
+        return offer.getValue() != null ? offer.getValue().shouldRewardExp() : super.shouldRewardExp();
     }
 
     @Override
-    public boolean satisfiedBy(@NonNull ItemStack a, @NonNull ItemStack b) {
-        return offer.get() != null ? offer.get().satisfiedBy(a, b) : super.satisfiedBy(a, b);
+    public boolean satisfiedBy(@NotNull ItemStack a, @NotNull ItemStack b) {
+        return offer.getValue() != null ? offer.getValue().satisfiedBy(a, b) : super.satisfiedBy(a, b);
     }
 
     @Override
-    public boolean take(@NonNull ItemStack a, @NonNull ItemStack b) {
-        return offer.get() != null ? offer.get().take(a, b) : super.take(a, b);
-    }
-
-    @Override
-    public @NotNull MerchantOffer copy() {
-        return offer.get() != null ? offer.get().copy() : super.copy();
+    public boolean take(@NotNull ItemStack a, @NotNull ItemStack b) {
+        return offer.getValue() != null ? offer.getValue().take(a, b) : super.take(a, b);
     }
 }

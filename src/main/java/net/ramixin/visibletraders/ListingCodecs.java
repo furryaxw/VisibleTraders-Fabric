@@ -5,8 +5,8 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.entity.npc.villager.VillagerTrades;
-import net.minecraft.world.level.saveddata.maps.MapDecorationType;
+import net.minecraft.world.entity.npc.VillagerTrades;
+import net.minecraft.world.level.saveddata.maps.MapDecoration;
 import net.ramixin.visibletraders.ducks.TreasureMapForEmeraldsDuck;
 import net.ramixin.visibletraders.threading.SerializableListing;
 
@@ -16,7 +16,7 @@ public interface ListingCodecs {
             Codec.INT.fieldOf("emeraldCost").forGetter(listing -> TreasureMapForEmeraldsDuck.get(listing).visibleTrades$getEmeraldCost()),
             TagKey.codec(Registries.STRUCTURE).fieldOf("destination").forGetter(listing -> TreasureMapForEmeraldsDuck.get(listing).visibleTrades$getDestination()),
             Codec.STRING.fieldOf("displayName").forGetter(listing -> TreasureMapForEmeraldsDuck.get(listing).visibleTrades$getDisplayName()),
-            MapDecorationType.CODEC.fieldOf("destinationType").forGetter(listing -> TreasureMapForEmeraldsDuck.get(listing).visibleTrades$getDestinationType()),
+            Codec.STRING.xmap(MapDecoration.Type::valueOf, MapDecoration.Type::name).fieldOf("destinationType").forGetter(listing -> TreasureMapForEmeraldsDuck.get(listing).visibleTrades$getDestinationType()),
             Codec.INT.fieldOf("maxUses").forGetter(listing -> TreasureMapForEmeraldsDuck.get(listing).visibleTrades$getMaxUses()),
             Codec.INT.fieldOf("villagerXp").forGetter(listing -> TreasureMapForEmeraldsDuck.get(listing).visibleTrades$getVillagerXp())
     ).apply(instance, VillagerTrades.TreasureMapForEmeralds::new));

@@ -1,13 +1,13 @@
 package net.ramixin.visibletraders.mixins;
 
+import com.llamalad7.mixinextras.sugar.Local;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.zombie.Zombie;
-import net.minecraft.world.entity.monster.zombie.ZombieVillager;
-import net.minecraft.world.entity.npc.villager.Villager;
+import net.minecraft.world.entity.monster.Zombie;
+import net.minecraft.world.entity.monster.ZombieVillager;
+import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
 import net.ramixin.visibletraders.LockedTradeData;
 import net.ramixin.visibletraders.ducks.VillagerDuck;
 import net.ramixin.visibletraders.ducks.ZombieVillagerDuck;
@@ -33,24 +33,24 @@ public abstract class ZombieVillagerMixin extends Zombie implements ZombieVillag
 
     @Unique
     private void ifPresent(Consumer<LockedTradeData> consumer) {
-        LockedTradeData val = lockedTradeData.get();
-        if(val == null) return;
+        LockedTradeData val = lockedTradeData.getValue();
+        if (val == null) return;
         consumer.accept(val);
     }
 
     @Inject(method = "addAdditionalSaveData", at = @At("HEAD"))
-    private void saveLockedTradeData(ValueOutput valueOutput, CallbackInfo ci) {
-        ifPresent(data -> data.write(valueOutput));
+    private void saveLockedTradeData(CompoundTag nbt, CallbackInfo ci) {
+        ifPresent(data -> data.write(nbt));
     }
 
     @Inject(method = "readAdditionalSaveData", at = @At("TAIL"))
-    private void readLockedTradeData(ValueInput valueInput, CallbackInfo ci) {
-        lockedTradeData.setValue(LockedTradeData.constructOrNull(valueInput, this));
+    private void readLockedTradeData(CompoundTag nbt, CallbackInfo ci) {
+        lockedTradeData.setValue(LockedTradeData.constructOrNull(nbt, this));
     }
 
-    @Inject(method = "method_63659", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/npc/villager/Villager;setVillagerXp(I)V"))
-    private void transferTradesToVillager(ServerLevel serverLevel, Villager villager, CallbackInfo ci) {
-        VillagerDuck.of(villager).visibleTraders$setLockedTradeData(lockedTradeData.get());
+    @Inject(method = "finishConversion", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/npc/Villager;setVillagerData(Lnet/minecraft/world/entity/npc/VillagerData;)V"))
+    private void transferTradesToVillager(ServerLevel serverLevel, CallbackInfo ci, @Local Villager villager) {
+        VillagerDuck.of(villager).visibleTraders$setLockedTradeData(lockedTradeData.getValue());
     }
 
     @Override

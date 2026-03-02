@@ -24,7 +24,7 @@ public class TradeWorker implements Runnable {
                 }
             }
             while(!pendingOrders.isEmpty()) {
-                FutureMerchantOffer order = pendingOrders.getFirst();
+                FutureMerchantOffer order = pendingOrders.get(0);
                 order.fulfillFuture();
                 pendingOrders.remove(order);
             }
