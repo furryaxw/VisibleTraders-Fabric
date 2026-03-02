@@ -1,3 +1,22 @@
+> **⚠️ Fork Notice**
+> 
+> This repository is a fork of the original [Visible Traders](https://github.com/Ramixin/VisibleTraders) mod created by Ramixin. 
+> 
+> **Modifications in this fork:**
+> * **Minecraft 1.20.1 Support:** Backported the entire mod from 1.21.11 to fully support `1.20.1`.
+> * **Java 17 Compatibility:** Downgraded the project compilation target from Java 21 to `Java 17`.
+> * **Fabric Environment:** Adapted the build environment to use Fabric Loader `>=0.17.2` and the appropriate Fabric API for 1.20.1.
+
+> **⚠️ 分支说明**
+> 
+> 本仓库是 Ramixin 制作的原版 [Visible Traders](https://github.com/Ramixin/VisibleTraders) 模组的分支。
+> 
+> **此分支中的核心修改：**
+> * **支持 Minecraft 1.20.1:** 将整个模组从 1.21.11 降级移植，以完全兼容 `1.20.1`。
+> * **兼容 Java 17:** 将项目的编译目标从 Java 21 降级到 `Java 17`。
+> * **Fabric 环境:** 调整了构建环境，使用 `>=0.17.2` 的 Fabric Loader 以及适用于 1.20.1 的 Fabric API。
+
+
 <div style="text-align: center;">
 <img src="brand.png"  alt="Visible Traders Logo">
 <h2>
